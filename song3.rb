@@ -17,7 +17,7 @@ live_loop :kick, sync: :met1 do
 end
 
 live_loop :hihat, sync: :met1 do
-  a = 1
+  a = 0.9
   sample :hat_tap, amp: a if pattern "x---x---x---x-x-"
   sleep 0.125
 end
@@ -37,12 +37,12 @@ end
 
 # Melody
 live_loop :melody, sync: :met1 do
-  use_synth :sine #saw, sine, pluck, tech_saws, tri
+  use_synth :saw #saw, sine, pluck, tech_saws, tri
   
   notes = scale(:E2, :minor_pentatonic, num_octaves: 2)
   
-  cu = line(60, 95, steps: 32).tick
-  #cu = 95
+  cu = line(40, 95, steps: 32).tick
+  #cu = 1
   
   #Rest
   if one_in(4)
@@ -50,6 +50,8 @@ live_loop :melody, sync: :met1 do
   else
     note = notes.choose
     a = 1
+    
+    
     with_fx :reverb, room: rrand(0.5, 0.9), mix: 0.6 do
       with_fx :echo, phase: [0.25, 0.5].choose, decay: 2 do
         with_fx :tanh, krunch: 1 do
@@ -70,7 +72,7 @@ live_loop :ambient_pad do
   a = 0.5
   cu = line(55, 85, steps: 32).tick
   use_synth_defaults attack: 2, sustain: 8, release: 6, amp: a
-  play em_pent.choose, pan: rrand(-0.5, 0.5), cutoff: cu
+  play em_pent.choose, pan: rrand(-0.5, 0.5), cutoff: 30 #cu
   sleep rrand(8, 16)
 end
 
