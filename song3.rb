@@ -12,7 +12,7 @@ end
 live_loop :wind do
   use_synth :dark_ambience
   use_synth_defaults sustain: 15, release: 12, amp: 0.8, attack: 3
-  play [:E1, :E2].choose, pan: rrand(-0.5, 0.5), cutoff: rrand(100, 130)
+  #play [:E1, :E2].choose, pan: rrand(-0.5, 0.5), cutoff: rrand(100, 130)
   sleep rrand(10, 20)
 end
 
@@ -27,7 +27,7 @@ end
 # HiHats
 live_loop :hihat, sync: :met1 do
   a = 0.2
-  sample :hat_tap, amp: a if pattern "x---x---x---x-x-"
+  #sample :hat_tap, amp: a if pattern "x---x---x---x-x-"
   sleep 0.125
 end
 
@@ -44,7 +44,7 @@ end
 live_loop :melody, sync: :met1 do
   use_synth :saw #saw, sine, pluck, tech_saws, tri
   
-  notes = scale(:E2, :minor_pentatonic, num_octaves: 2)
+  notes = scale(:B2, :minor_pentatonic, num_octaves: 2)
   
   cu = line(40, 95, steps: 32).tick
   #cu = 90
@@ -53,12 +53,13 @@ live_loop :melody, sync: :met1 do
     sleep [0.25, 0.5].choose
   else
     note = notes.choose
-    a = 0.4
+    a = 0.8
     
     with_fx :reverb, room: rrand(0.5, 0.9), mix: 0.6 do
       with_fx :echo, phase: [0.25, 0.5].choose, decay: 2 do
         with_fx :tanh, krunch: 0 do
-          play note, release: rrand(0.1, 0.5), cutoff: cu, amp: a
+          #MELODY
+          #play note, release: rrand(0.1, 0.5), cutoff: cu, amp: a
         end
       end
     end
