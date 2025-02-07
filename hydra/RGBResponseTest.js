@@ -1,10 +1,13 @@
 s0.initScreen()
+a.setBins(); // Set the number of frequency bins for analysis
+a.setSmooth(0.8); // Set the smoothing of the audio reactivity
+
 
 src(s0)
   .layer(
     src(s0)
       .r() // Extract red channel
-      .scale(()=>1 + 0.01 * Math.sin(time)) // Pulsate effect for depth
+      .scale(()=>1 + 0.01 * Math.sin(time) + (a.fft[0])) // Pulsate effect for depth
       .rotate(()=>0.01 * Math.sin(time)) // Subtle rotation to simulate depth
       .scrollX(()=>0.01 * Math.sin(time * 0.5)) // Apply horizontal wave motion
       .scrollY(()=>0.03 * Math.cos(time * 0.5)) // Apply vertical wave motion
@@ -34,6 +37,7 @@ src(s0)
   )
   .mult(osc(10, 0.1, 1).color(1,1,1)) // Apply cyan hue
 
-  .blend(src(s0), 0.7) // Mix with the original input
+  .blend(src(s0), 0.4) // Mix with the original input
 
   .out()
+
